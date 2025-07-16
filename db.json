@@ -1,0 +1,29 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop",
+      "price": 1000,
+      "description": "High-end laptop",
+      "image": "https://www.shutterstock.com/shutterstock/photos/310965713/display_1500/stock-photo-the-rocky-shore-or-beach-andaman-sea-thailand-310965713.jpg"
+    },
+    { "id": 2,
+      "name": "Phone", 
+      "price": 500, 
+      "description": "Smartphone",
+      "image": "https://www.shutterstock.com/shutterstock/photos/2543045653/display_1500/stock-photo-waves-of-rushing-sea-are-crashing-over-rocky-coastline-sea-waves-break-upon-rocks-ultra-wide-2543045653.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Tablet",
+      "price": 300,
+      "description": "Portable tablet",
+      "image": "https://www.shutterstock.com/shutterstock/photos/1730039698/display_1500/stock-photo-peanuts-in-the-shell-background-or-texture-1730039698.jpg"
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "Điện thoại" },
+    { "id": 2, "name": "Máy tính" },
+    { "id": 3, "name": "Phụ kiện" }
+  ]
+}
