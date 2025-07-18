@@ -25,5 +25,52 @@
     { "id": 1, "name": "Điện thoại" },
     { "id": 2, "name": "Máy tính" },
     { "id": 3, "name": "Phụ kiện" }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "a@gmail.com",
+      "phone": "0123456789"
+    },
+    {
+      "id": 2,
+      "name": "Trần Thị B",
+      "email": "b@gmail.com",
+      "phone": "0987654321"
+    }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "name": "Samsung",
+      "country": "Hàn Quốc",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg"
+    },
+    {
+      "id": 2,
+      "name": "Apple",
+      "country": "Mỹ",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "customerName": "Nguyễn Văn A",
+      "email": "vana@gmail.com",
+      "total": 1500000,
+      "status": "completed",
+      "date": "2025-07-17"
+    },
+    {
+      "id": 2,
+      "customerName": "Trần Thị B",
+      "email": "tranb@gmail.com",
+      "total": 500000,
+      "status": "pending",
+      "date": "2025-07-16"
+    }
   ]
+
 }
