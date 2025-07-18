@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Alert } from "antd";
 import axios from "axios";
+import Header from "./Header";
 
 interface User {
   id: number;
@@ -65,6 +66,7 @@ const UserList: React.FC = () => {
 
   return (
     <div>
+        <Header />
       <h2>Danh sách người dùng</h2>
       <Button
         type="primary"

@@ -2,6 +2,8 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Alert } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 // Định nghĩa interface cho sản phẩm
 interface Product {
@@ -18,7 +20,13 @@ const fetchProducts = async (): Promise<Product[]> => {
 };
 
 const ProductList: React.FC = () => {
-  // Sử dụng useQuery để lấy dữ liệu
+
+  const navigate = useNavigate();
+
+  const goToProductDetail = (id : number) => {
+    navigate(`/products/${id}`);
+  }
+
   const {
     data: products,
     isLoading,
@@ -83,6 +91,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div>
+      <Header />
       <h2>Danh sách sản phẩm</h2>
       <Button
         type="primary"
@@ -96,9 +105,10 @@ const ProductList: React.FC = () => {
         dataSource={products}
         columns={columns}
         rowKey="id"
-        loading={isLoading} // Hiển thị spinner khi đang tải
-        pagination={{ pageSize: 5 }} // Phân trang, mỗi trang 5 bản ghi
+        loading={isLoading} 
+        pagination={{ pageSize: 5 }} 
       />
+      <button onClick={() => goToProductDetail(1)} >Xem sản phẩm 1</button>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Alert, Tag } from "antd";
 import axios from "axios";
+import Header from "./Header";
 
 interface Order {
   id: number;
@@ -93,6 +94,7 @@ const OrderList: React.FC = () => {
 
   return (
     <div>
+    <Header />
       <h2>Danh sách đơn hàng</h2>
       <Button
         type="primary"

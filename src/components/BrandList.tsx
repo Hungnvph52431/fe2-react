@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Alert } from "antd";
 import axios from "axios";
+import Header from "./Header";
 
 interface Brand {
   id: number;
@@ -74,6 +75,7 @@ const BrandList: React.FC = () => {
 
   return (
     <div>
+        <Header />
       <h2>Danh sách thương hiệu</h2>
       <Button
         type="primary"
