@@ -60,7 +60,7 @@
       "customerName": "Nguyễn Văn A",
       "email": "vana@gmail.com",
       "total": 1500000,
-      "status": "completed",
+      "status": "Hoàn thành",
       "date": "2025-07-17"
     },
     {
@@ -68,7 +68,7 @@
       "customerName": "Trần Thị B",
       "email": "tranb@gmail.com",
       "total": 500000,
-      "status": "pending",
+      "status": "Tiến hành",
       "date": "2025-07-16"
     }
   ]

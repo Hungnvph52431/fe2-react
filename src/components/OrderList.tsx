@@ -30,11 +30,11 @@ const OrderList: React.FC = () => {
 
   const statusColor = (status: string) => {
     switch (status) {
-      case "completed":
+      case "Hoàn thành":
         return "green";
-      case "pending":
+      case "Tiến hành":
         return "orange";
-      case "cancelled":
+      case "Hủy bỏ":
         return "red";
       default:
         return "default";
