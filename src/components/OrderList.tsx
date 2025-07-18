@@ -8,7 +8,7 @@ interface Order {
   customerName: string;
   email: string;
   total: number;
-  status: "pending" | "completed" | "cancelled";
+  status: "Tiến hành" | "Hoàn thành" | "Hủy bỏ";
   date: string;
 }
 
