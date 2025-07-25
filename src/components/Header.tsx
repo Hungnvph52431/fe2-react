@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  CheckOutlined,
   HomeOutlined,
   ShopFilled,
   ShoppingOutlined,
@@ -9,46 +10,56 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
-    label: "Homepage",
+    label: "Trang chủ",
     key: "/",
     icon: <HomeOutlined />,
   },
   {
-    label: "Products",
+    label: "Sản phẩm",
     key: "/products",
     icon: <ShopFilled />,
   },
   {
-    label: "Categories",
+    label: "Danh mục",
     key: "/categories",
     icon: <UnorderedListOutlined />,
   },
   {
-    label: "User",
+    label: "Người dùng",
     key: "/users",
     icon: <UserOutlined />,
   },
   {
-    label: "Brand",
+    label: "Thương hiệu",
     key: "/brands",
     icon: <TagsOutlined />,
   },
   {
-    label: "Order",
+    label: "Đơn hàng",
     key: "/orders",
     icon: <ShoppingOutlined />,
+  },
+  {
+    label: "Thanh toán",
+    key: "/checkouts",
+    icon: <CheckOutlined />,
   },
 ];
 
 const Header: React.FC = () => {
-  const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
+  const location = useLocation();
+  const [current, setCurrent] = useState(location.pathname);
+
+  useEffect(() => {
+    setCurrent(location.pathname);
+  }, [location.pathname]);
 
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
@@ -60,6 +71,8 @@ const Header: React.FC = () => {
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
+      theme="light"
+      style={{ boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" }}
       items={items}
     />
   );

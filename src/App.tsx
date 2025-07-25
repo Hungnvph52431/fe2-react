@@ -8,6 +8,9 @@ import BrandList from './components/BrandList';
 import OrderList from './components/OrderList';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Homepage from './components/HomePage';
+import Checkout from './components/Checkout';
+import ProductDetail from './components/ProductDetail';
+import Dashboard from './components/admin/Dashboard';
 
 
 function App() {
@@ -20,6 +23,10 @@ function App() {
     {
       path: "/products",
       element: <ProductList/>
+    },
+    {
+      path: "/products/:id",
+      element: <ProductDetail/>
     },
     {
       path: "/users",
@@ -37,7 +44,32 @@ function App() {
       path: "/orders",
       element: <OrderList/>
     },
-    
+    {
+      path: "/checkouts",
+      element: <Checkout />
+    },
+     {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "products",
+        element: <ProductList />,
+      },
+      {
+        path: "users",
+        element: <UserList />,
+      },
+      {
+        path: "categories",
+        element: <CategoryList />,
+      },
+      {
+        path: "orders",
+        element: <OrderList />,
+      }
+    ],
+  },
     
   ])
 

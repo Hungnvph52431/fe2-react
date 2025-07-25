@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Table, Button, Alert } from "antd";
 import axios from "axios";
 import Header from "./Header";
+import { useSearchParams } from "react-router-dom";
 
 // Interface cho danh mục
 interface Category {
@@ -17,6 +18,15 @@ const fetchCategories = async (): Promise<Category[]> => {
 };
 
 const CategoryList: React.FC = () => {
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const category = searchParams.get("category");
+
+  const handleFilter = () => {
+    setSearchParams({category: "eletronics"})
+  }
+
   const {
     data: categories,
     isLoading,
@@ -59,6 +69,8 @@ const CategoryList: React.FC = () => {
     <div>
       <Header />
       <h2>Danh sách danh mục</h2>
+      <p>Danh mục hiện tại: {category || "Không có"}</p>
+      <button onClick={handleFilter}>Lọc theo Electronics</button>
       <Button
         type="primary"
         onClick={() => refetch()}
