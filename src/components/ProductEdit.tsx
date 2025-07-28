@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, InputNumber } from "antd";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-// Định nghĩa interface cho sản phẩm
 interface Product {
   id?: number;
   name: string;
@@ -13,15 +12,13 @@ interface Product {
   image?: string;
 }
 
-// Định nghĩa interface cho form data
 interface FormValues {
   name: string;
-  price: number; 
+  price: number;
   description: string;
   image?: string;
 }
 
-// Định nghĩa interface cho data gửi lên API
 interface ProductUpdateData {
   name: string;
   price: number;
@@ -30,44 +27,44 @@ interface ProductUpdateData {
 }
 
 interface ProductEditFormProps {
-  productId?: number; // Optional vì có thể lấy từ useParams
+  productId?: number;
 }
 
 const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
   const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>();
-  const nav = useNavigate();
-  // Sử dụng productId từ props hoặc từ params
+  const navigate = useNavigate();
+
   const currentId = productId || id;
 
-  // Fetch product data
   const fetchProduct = async (productId: number | string): Promise<Product> => {
-    const response = await axios.get(`http://localhost:3001/products/${productId}`);
+    const response = await axios.get(
+      `http://localhost:3001/products/${productId}`
+    );
     return response.data;
   };
 
-  // Sử dụng useQuery để fetch dữ liệu sản phẩm
   const { data, isLoading: isLoadingProduct } = useQuery({
     queryKey: ["product", currentId],
     queryFn: () => fetchProduct(currentId!),
-    enabled: !!currentId, // Chỉ fetch khi có id
+    enabled: !!currentId,
   });
 
-  // Set form values khi có data
   useEffect(() => {
     if (data) {
       form.setFieldsValue({
         name: data.name,
-        price: data.price.toString(),
+        price: data.price,
         description: data.description,
-        image: data.image 
+        image: data.image || "",
       });
     }
   }, [data, form]);
 
-  // Hàm gọi API để cập nhật sản phẩm
-  const updateProduct = async (productData: ProductUpdateData): Promise<Product> => {
+  const updateProduct = async (
+    productData: ProductUpdateData
+  ): Promise<Product> => {
     const response = await axios.put(
       `http://localhost:3001/products/${currentId}`,
       productData
@@ -75,29 +72,27 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
     return response.data;
   };
 
-  // Sử dụng useMutation với TypeScript
   const mutation = useMutation<Product, Error, ProductUpdateData>({
     mutationFn: updateProduct,
     onSuccess: () => {
       message.success("Cập nhật sản phẩm thành công!");
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["product", currentId] });
-      nav("/products")
+      navigate("/products");
     },
     onError: (error) => {
       message.error(`Lỗi khi cập nhật sản phẩm: ${error.message}`);
     },
   });
 
-  // Hàm submit form
   const onFinish = (values: FormValues) => {
-    // Chuyển price từ string sang number
     const productData: ProductUpdateData = {
       name: values.name,
-      price: Number(values.price),
-      description: values.description
+      price: values.price,
+      description: values.description,
+      image: values.image,
     };
-    
+
     mutation.mutate(productData);
   };
 
@@ -116,7 +111,7 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ name: "", price: "" }}
+        initialValues={{ name: "", price: 0 }}
       >
         <Form.Item
           label="Tên sản phẩm"
@@ -125,15 +120,16 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
         >
           <Input />
         </Form.Item>
+
         <Form.Item
           label="Giá"
           name="price"
           rules={[
             { required: true, message: "Vui lòng nhập giá sản phẩm!" },
-            { pattern: /^\d+(\.\d+)?$/, message: "Giá phải là số hợp lệ!" }
+            { type: "number", min: 1, message: "Giá sản phẩm phải lớn hơn 0" },
           ]}
         >
-          <Input type="number" />
+          <InputNumber style={{ width: "100%" }} addonAfter="VND" />
         </Form.Item>
 
         <Form.Item
@@ -149,10 +145,7 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
         </Form.Item>
 
         <Form.Item>
-          <Button 
-          type="primary" htmlType="submit" loading={mutation.isPending}
-
-          >
+          <Button type="primary" htmlType="submit" loading={mutation.isPending}>
             Cập nhật
           </Button>
         </Form.Item>

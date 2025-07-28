@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table, Button, Alert, Input, Space, Popconfirm, message
-} from "antd";
-import { SearchOutlined } from '@ant-design/icons';
+import { Table, Button, Alert, Input, Space, Popconfirm, message } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate, useSearchParams, useParams } from "react-router-dom";
@@ -22,9 +20,10 @@ const fetchProducts = async (keyword: string): Promise<Product[]> => {
   const { data } = await axios.get("http://localhost:3001/products");
   if (!keyword || !keyword.trim()) return data;
 
-  return data.filter((product: Product) =>
-    product.name.toLowerCase().includes(keyword.toLowerCase()) ||
-    product.description.toLowerCase().includes(keyword.toLowerCase())
+  return data.filter(
+    (product: Product) =>
+      product.name.toLowerCase().includes(keyword.toLowerCase()) ||
+      product.description.toLowerCase().includes(keyword.toLowerCase())
   );
 };
 
@@ -42,7 +41,6 @@ const ProductList: React.FC = () => {
   const queryClient = useQueryClient();
   const { categoryId } = useParams();
 
-  // Query danh sách sản phẩm
   const {
     data: products,
     isLoading,
@@ -53,9 +51,8 @@ const ProductList: React.FC = () => {
     queryFn: () => fetchProducts(keyword),
   });
 
-  // Mutation xóa sản phẩm
   const deleteMutation = useMutation({
-    mutationFn: deleteProduct,  
+    mutationFn: deleteProduct,
     onSuccess: () => {
       message.success("Xóa sản phẩm thành công");
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -65,7 +62,6 @@ const ProductList: React.FC = () => {
     },
   });
 
-  // Tìm kiếm
   const handleSearch = () => {
     setSearchParams({ search: inputValue });
   };
@@ -126,7 +122,14 @@ const ProductList: React.FC = () => {
             }}
           />
         ) : (
-          <div style={{ width: 60, height: 60, background: "#f0f0f0", borderRadius: 4 }} />
+          <div
+            style={{
+              width: 60,
+              height: 60,
+              background: "#f0f0f0",
+              borderRadius: 4,
+            }}
+          />
         ),
     },
     {
@@ -143,9 +146,9 @@ const ProductList: React.FC = () => {
           </Button>
 
           <Button
-          type="primary"
-          onClick={() => navigate(`/products/edit/${record.id}`)}
-          size="small"
+            type="primary"
+            onClick={() => navigate(`/products/edit/${record.id}`)}
+            size="small"
           >
             Sửa
           </Button>
@@ -156,18 +159,13 @@ const ProductList: React.FC = () => {
             cancelText="Hủy"
             onConfirm={() => handleDelete(record.id)}
           >
-            <Button
-              type="primary"
-              danger
-              size="small"
-            >
+            <Button type="primary" danger size="small">
               Xóa
             </Button>
           </Popconfirm>
         </Space>
       ),
     },
-
   ];
 
   if (error) {
@@ -206,7 +204,6 @@ const ProductList: React.FC = () => {
           <Button type="primary" onClick={() => navigate("/products/create")}>
             Thêm mới sản phẩm
           </Button>
-
         </Space>
 
         <Table

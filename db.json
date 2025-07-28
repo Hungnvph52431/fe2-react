@@ -2,8 +2,9 @@
   "products": [
     {
       "name": "Phone",
-      "price": 500,
+      "price": 12,
       "description": "123",
+      "image": "https://m.media-amazon.com/images/I/91bYsX41DVL._AC_UF1000,1000_QL80_.jpg",
       "id": "2"
     },
     {
@@ -20,10 +21,11 @@
       "image": "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/11/tai-hinh-nen-dep-mien-phi.jpg"
     },
     {
-      "id": "98dd",
       "name": "ádasdasd1212",
       "price": 12313,
-      "description": "ẤDFSADF"
+      "description": "ẤDFSADF",
+      "image": "https://cdn.pixabay.com/photo/2015/01/09/11/09/laptop-594091_1280.jpg",
+      "id": "98dd"
     },
     {
       "id": "cf63",
