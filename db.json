@@ -1,40 +1,60 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "Laptop",
-      "price": 1000,
-      "description": "High-end laptop",
-      "image": "https://www.shutterstock.com/shutterstock/photos/310965713/display_1500/stock-photo-the-rocky-shore-or-beach-andaman-sea-thailand-310965713.jpg"
-    },
-    { "id": 2,
-      "name": "Phone", 
-      "price": 500, 
-      "description": "Smartphone",
-      "image": "https://www.shutterstock.com/shutterstock/photos/2543045653/display_1500/stock-photo-waves-of-rushing-sea-are-crashing-over-rocky-coastline-sea-waves-break-upon-rocks-ultra-wide-2543045653.jpg"
+      "name": "Phone",
+      "price": 500,
+      "description": "123",
+      "id": "2"
     },
     {
-      "id": 3,
       "name": "Tablet",
       "price": 300,
       "description": "Portable tablet",
-      "image": "https://www.shutterstock.com/shutterstock/photos/1730039698/display_1500/stock-photo-peanuts-in-the-shell-background-or-texture-1730039698.jpg"
+      "id": "3"
+    },
+    {
+      "id": "4",
+      "name": "Laptop",
+      "price": 1000,
+      "description": "laptop dell xps 13",
+      "image": "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/11/tai-hinh-nen-dep-mien-phi.jpg"
+    },
+    {
+      "id": "98dd",
+      "name": "ádasdasd1212",
+      "price": 12313,
+      "description": "ẤDFSADF"
+    },
+    {
+      "id": "cf63",
+      "name": "jsdfhsj",
+      "price": "5123",
+      "description": "sdgsdfg"
     }
   ],
   "categories": [
-    { "id": 1, "name": "Điện thoại" },
-    { "id": 2, "name": "Máy tính" },
-    { "id": 3, "name": "Phụ kiện" }
+    {
+      "id": "1",
+      "name": "Điện thoại"
+    },
+    {
+      "id": "2",
+      "name": "Máy tính"
+    },
+    {
+      "id": "3",
+      "name": "Phụ kiện"
+    }
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nguyễn Văn A",
       "email": "a@gmail.com",
       "phone": "0123456789"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Trần Thị B",
       "email": "b@gmail.com",
       "phone": "0987654321"
@@ -42,13 +62,13 @@
   ],
   "brands": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Samsung",
       "country": "Hàn Quốc",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Apple",
       "country": "Mỹ",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
@@ -56,7 +76,7 @@
   ],
   "orders": [
     {
-      "id": 1,
+      "id": "1",
       "customerName": "Nguyễn Văn A",
       "email": "vana@gmail.com",
       "total": 1500000,
@@ -64,7 +84,7 @@
       "date": "2025-07-17"
     },
     {
-      "id": 2,
+      "id": "2",
       "customerName": "Trần Thị B",
       "email": "tranb@gmail.com",
       "total": 500000,
@@ -72,5 +92,4 @@
       "date": "2025-07-16"
     }
   ]
-
 }

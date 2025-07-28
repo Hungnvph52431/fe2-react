@@ -11,6 +11,8 @@ import Homepage from './components/HomePage';
 import Checkout from './components/Checkout';
 import ProductDetail from './components/ProductDetail';
 import Dashboard from './components/admin/Dashboard';
+import ProductCreate from './components/ProductCreate';
+import ProductEditForm from './components/ProductEdit';
 
 
 function App() {
@@ -27,6 +29,14 @@ function App() {
     {
       path: "/products/:id",
       element: <ProductDetail/>
+    },
+    {
+      path: "/products/create",
+      element: <ProductCreate />
+    },
+    {
+      path: "/products/edit/:id",
+      element: <ProductEditForm />
     },
     {
       path: "/users",

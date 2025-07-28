@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Table, Button, Alert, Input, Space } from "antd";
+import {
+  Table, Button, Alert, Input, Space, Popconfirm, message
+} from "antd";
 import { SearchOutlined } from '@ant-design/icons';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate, useSearchParams, useParams } from "react-router-dom";
 import Header from "./Header";
 
-// Định nghĩa interface cho sản phẩm
+// Interface sản phẩm
 interface Product {
   id: number;
   name: string;
@@ -15,74 +17,71 @@ interface Product {
   image?: string;
 }
 
-// Hàm gọi API để lấy danh sách sản phẩm - Cách 2: Filter phía client
+// API: Lấy danh sách sản phẩm
 const fetchProducts = async (keyword: string): Promise<Product[]> => {
-  console.log('Searching with keyword:', keyword);
-  
-  // Luôn lấy tất cả sản phẩm
   const { data } = await axios.get("http://localhost:3001/products");
-  
-  console.log('Total products from API:', data?.length);
-  
-  // Nếu không có keyword, trả về tất cả
-  if (!keyword || !keyword.trim()) {
-    return data;
-  }
-  
-  // Filter phía client
-  const filteredData = data.filter((product: Product) => 
+  if (!keyword || !keyword.trim()) return data;
+
+  return data.filter((product: Product) =>
     product.name.toLowerCase().includes(keyword.toLowerCase()) ||
     product.description.toLowerCase().includes(keyword.toLowerCase())
   );
-  
-  console.log('Filtered products:', filteredData?.length);
-  return filteredData;
+};
+
+// API: Xóa sản phẩm
+const deleteProduct = async (id: number): Promise<void> => {
+  await axios.delete(`http://localhost:3001/products/${id}`);
 };
 
 const ProductList: React.FC = () => {
-  // Sử dụng useSearchParams để quản lý query parameters
   const [searchParams, setSearchParams] = useSearchParams();
-  const { categoryId } = useParams(); // Ví dụ sử dụng useParams nếu có category
-  
-  // Lấy keyword từ URL params
-  const keyword = searchParams.get('search') || '';
+  const keyword = searchParams.get("search") || "";
   const [inputValue, setInputValue] = useState(keyword);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { categoryId } = useParams();
 
-  const goToProductDetail = (id: number) => {
-    navigate(`/products/${id}`);
-  };
-
-  // Hàm xử lý tìm kiếm
-  const handleSearch = () => {
-    setSearchParams({ search: inputValue });
-  };
-
-  // Hàm xóa bộ lọc
-  const handleClearSearch = () => {
-    setInputValue('');
-    setSearchParams({});
-  };
-
-  // useQuery sử dụng keyword từ URL params
+  // Query danh sách sản phẩm
   const {
     data: products,
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["products", keyword, categoryId], // Bao gồm cả categoryId nếu có
+    queryKey: ["products", keyword, categoryId],
     queryFn: () => fetchProducts(keyword),
-    // Tự động refetch khi keyword thay đổi
   });
 
-  // Sync inputValue với keyword từ URL khi component mount
+  // Mutation xóa sản phẩm
+  const deleteMutation = useMutation({
+    mutationFn: deleteProduct,  
+    onSuccess: () => {
+      message.success("Xóa sản phẩm thành công");
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError: () => {
+      message.error("Xóa sản phẩm thất bại");
+    },
+  });
+
+  // Tìm kiếm
+  const handleSearch = () => {
+    setSearchParams({ search: inputValue });
+  };
+
   useEffect(() => {
     setInputValue(keyword);
   }, [keyword]);
 
-  // Cấu hình cột cho bảng AntD
+  const goToProductDetail = (id: number) => {
+    navigate(`/products/${id}`);
+  };
+
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(id);
+  };
+
   const columns = [
     {
       title: "ID",
@@ -114,39 +113,70 @@ const ProductList: React.FC = () => {
       title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
-      render: (image: string) => 
+      render: (image: string) =>
         image ? (
           <img
             src={image}
             alt="product"
-            style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 4 }}
+            style={{
+              width: 60,
+              height: 60,
+              objectFit: "cover",
+              borderRadius: 4,
+            }}
           />
         ) : (
-          <div style={{ width: 60, height: 60, background: '#f0f0f0', borderRadius: 4 }} />
-        )
+          <div style={{ width: 60, height: 60, background: "#f0f0f0", borderRadius: 4 }} />
+        ),
     },
     {
-      title: "Thao tác",
+      title: "Hành động",
       key: "action",
       render: (_: unknown, record: Product) => (
-        <Button 
-          type="link" 
-          onClick={() => goToProductDetail(record.id)}
-        >
-          Xem chi tiết
-        </Button>
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => goToProductDetail(record.id)}
+            size="small"
+          >
+            Xem
+          </Button>
+
+          <Button
+          type="primary"
+          onClick={() => navigate(`/products/edit/${record.id}`)}
+          size="small"
+          >
+            Sửa
+          </Button>
+
+          <Popconfirm
+            title="Bạn có chắc chắn muốn xóa sản phẩm này không?"
+            okText="Xóa"
+            cancelText="Hủy"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button
+              type="primary"
+              danger
+              size="small"
+            >
+              Xóa
+            </Button>
+          </Popconfirm>
+        </Space>
       ),
-    }
+    },
+
   ];
 
-  // Xử lý lỗi
   if (error) {
     return (
       <div>
         <Header />
         <Alert
           message="Lỗi"
-          description="Không thể tải dữ liệu. Vui lòng thử lại!"
+          description="Không thể tải dữ liệu. Vui lòng thử lại sau."
           type="error"
           showIcon
           style={{ margin: "20px 0" }}
@@ -160,8 +190,7 @@ const ProductList: React.FC = () => {
       <Header />
       <div style={{ padding: "20px" }}>
         <h2>Danh sách sản phẩm</h2>
-        
-        {/* Thanh tìm kiếm */}
+
         <Space style={{ marginBottom: 16 }}>
           <Input
             placeholder="Tìm kiếm sản phẩm..."
@@ -174,24 +203,24 @@ const ProductList: React.FC = () => {
           <Button type="primary" onClick={handleSearch} loading={isLoading}>
             Tìm kiếm
           </Button>
-          <Button type="primary" onClick={() => refetch()} disabled={isLoading}>
-            Làm mới
+          <Button type="primary" onClick={() => navigate("/products/create")}>
+            Thêm mới sản phẩm
           </Button>
+
         </Space>
 
-        {/* Bảng sản phẩm */}
         <Table
           dataSource={products}
           columns={columns}
           rowKey="id"
-          loading={isLoading} 
-          pagination={{ 
+          loading={isLoading}
+          pagination={{
             pageSize: 10,
             showSizeChanger: true,
             showQuickJumper: true,
-            showTotal: (total, range) => 
-              `${range[0]}-${range[1]} của ${total} sản phẩm`
-          }} 
+            showTotal: (total, range) =>
+              `${range[0]}-${range[1]} trong ${total} sản phẩm`,
+          }}
         />
       </div>
     </div>
