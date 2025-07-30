@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   CheckOutlined,
   HomeOutlined,
+  OrderedListOutlined,
   ShopFilled,
   ShoppingOutlined,
   TagsOutlined,
@@ -50,6 +51,12 @@ const items: MenuItem[] = [
     key: "/checkouts",
     icon: <CheckOutlined />,
   },
+  {
+    label: "danh sách",
+    key: "/list",
+    icon: <OrderedListOutlined  />,
+  },
+  
 ];
 
 const Header: React.FC = () => {

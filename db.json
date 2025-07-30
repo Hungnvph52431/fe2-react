@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "Phone",
-      "price": 12,
+      "price": 1,
       "description": "123",
       "image": "https://m.media-amazon.com/images/I/91bYsX41DVL._AC_UF1000,1000_QL80_.jpg",
       "id": "2"
@@ -14,11 +14,11 @@
       "id": "3"
     },
     {
-      "id": "4",
       "name": "Laptop",
       "price": 1000,
       "description": "laptop dell xps 13",
-      "image": "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/11/tai-hinh-nen-dep-mien-phi.jpg"
+      "image": "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/11/tai-hinh-nen-dep-mien-phi.jpg",
+      "id": "4"
     },
     {
       "name": "ádasdasd1212",
@@ -26,12 +26,6 @@
       "description": "ẤDFSADF",
       "image": "https://cdn.pixabay.com/photo/2015/01/09/11/09/laptop-594091_1280.jpg",
       "id": "98dd"
-    },
-    {
-      "id": "cf63",
-      "name": "jsdfhsj",
-      "price": "5123",
-      "description": "sdgsdfg"
     }
   ],
   "categories": [

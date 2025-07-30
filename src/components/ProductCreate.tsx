@@ -55,14 +55,21 @@ const ProductCreate: React.FC = () => {
             rules={[{ required: true, message: "Vui lòng nhập tên sản phẩm" }]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item>  
 
           <Form.Item
             label="Giá"
             name="price"
-            rules={[{ required: true, message: "Vui lòng nhập giá" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập giá sản phẩm!" },
+              {
+                type: "number",
+                min: 1,
+                message: "Giá sản phẩm phải lớn hơn 0",
+              },
+            ]}
           >
-            <Input type="number" style={{ width: "100%" }} addonAfter="VND" />
+            <InputNumber style={{ width: "100%" }} addonAfter="VND" />
           </Form.Item>
 
           <Form.Item
@@ -70,10 +77,14 @@ const ProductCreate: React.FC = () => {
             name="description"
             rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
           >
-            <Input.TextArea rows={4} />
+            <Input.TextArea rows={2} />
           </Form.Item>
 
-          <Form.Item label="Hình ảnh (URL)" name="image">
+          <Form.Item 
+            label="Hình ảnh (URL)" 
+            name="image"
+            rules={[{ required: true, message: "Vui lòng nhập hình ảnh" }]}
+            >
             <Input />
           </Form.Item>
 

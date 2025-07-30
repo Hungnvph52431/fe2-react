@@ -13,6 +13,7 @@ import ProductDetail from './components/ProductDetail';
 import Dashboard from './components/admin/Dashboard';
 import ProductCreate from './components/ProductCreate';
 import ProductEditForm from './components/ProductEdit';
+import ListPage from './components/ListPage';
 
 
 function App() {
@@ -58,6 +59,10 @@ function App() {
       path: "/checkouts",
       element: <Checkout />
     },
+    {
+      path: "/list",
+      element: <ListPage />
+    },
      {
     path: "/dashboard",
     element: <Dashboard />,
@@ -87,6 +92,7 @@ function App() {
     <div style={{padding : "20px"}}>
       <RouterProvider router={router} />
     </div>
+    
   );
 }
 

@@ -137,10 +137,14 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ productId }) => {
           name="description"
           rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
         >
-          <Input.TextArea rows={4} />
+          <Input.TextArea rows={2} />
         </Form.Item>
 
-        <Form.Item label="Hình ảnh (URL)" name="image">
+        <Form.Item 
+          label="Hình ảnh (URL)" 
+          name="image"
+          rules={[{ required: true, message: "Vui lòng nhập hình ảnh" }]}
+          >
           <Input />
         </Form.Item>
 

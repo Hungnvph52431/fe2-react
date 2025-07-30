@@ -45,7 +45,6 @@ const ProductList: React.FC = () => {
     data: products,
     isLoading,
     error,
-    refetch,
   } = useQuery({
     queryKey: ["products", keyword, categoryId],
     queryFn: () => fetchProducts(keyword),
